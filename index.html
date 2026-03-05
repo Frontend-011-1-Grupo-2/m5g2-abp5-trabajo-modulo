@@ -1,11 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Proyecto Módulo 5</title>
-</head>
-<body>
-  <h1>Proyecto Módulo: ToDo App</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proyecto Módulo 5</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <!-- Bootstrap JS -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Mi JS -->
+    <script defer src="./assets/js/script.js"></script>
+  </head>
+  <body>
+    <!-- As a heading -->
+    <nav class="navbar bg-body-tertiary">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">TaskFlow</span>
+      </div>
+    </nav>
+    <main class="container my-4">
+      <div class="row">
+        <div class="col-md-6">
+          <h2>Crear nueva Tarea</h2>
+          <form class="border rounded-3 p-4 shadow">
+            <div class="mb-3">
+              <label class="form-label" for="descripcion">Descripcion</label>
+              <input
+                class="form-control"
+                type="text"
+                name="descripcion"
+                id="descripcion"
+                placeholder="Ej: Lavar ropa"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="fechaLimite">Fecha Límite</label>
+              <input
+                class="form-control"
+                type="datetime-local"
+                name="fechaLimite"
+                id="fechaLimite"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Agregar</button>
+          </form>
+        </div>
+
+        <div class="col-md-6">
+          <h2>Tareas</h2>
+          <ul class="list-group" id="listaTareas"></ul>
+        </div>
+      </div>
+    </main>
+  </body>
 </html>
