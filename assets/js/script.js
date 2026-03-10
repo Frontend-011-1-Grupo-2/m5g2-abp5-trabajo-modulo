@@ -7,10 +7,6 @@ const alertContainer = document.getElementById('alertContainer');
 
 // Crear instancia de GestorTareas y Tareas
 const gestorTareas = new GestorTareas();
-// Agregar tareas
-gestorTareas.agregarTarea(new Tarea(1, 'Tarea 1', true, new Date()));
-gestorTareas.agregarTarea(new Tarea(2, 'Tarea 2', true, new Date()));
-gestorTareas.agregarTarea(new Tarea(3, 'Tarea 3', false, new Date()));
 
 const contadorRegresivo = (fechaLimite) => {
   if (!fechaLimite) return 'No hay una fecha límite';
@@ -149,4 +145,55 @@ const insertAlert = (className, message) => {
   `;
 
   alertContainer.innerHTML = alert;
+};
+
+// Geolocation API (del navegador) para obtener latitud y longitud
+const options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0,
+};
+
+const success = (pos) => {
+  const crd = pos.coords;
+
+  console.log(crd);
+  console.log(`Tu latitud es: ${crd.latitude}`);
+  console.log(`Tu longitud es: ${crd.longitude}`);
+
+  // Pasarle a funcion del clima las coordenadas
+  getWeather(crd.latitude, crd.longitude);
+};
+
+const error = (error) => {
+  console.warn(`Error ${error.code}: ${error.message}`);
+};
+
+navigator.geolocation.getCurrentPosition(success, error, options);
+
+// OpenWeather API - Api de terceros para el clima
+const API_KEY = '5041d54fd8a673370a396b5ccf24748a';
+const getWeather = async (lat, lon) => {
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=es`;
+
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok)
+      throw new Error('La petición a la API no funcionó', response.statusText);
+
+    const data = await response.json();
+    console.log('Datos del clima obtenidos', data);
+    const nombreLocalidad = data.name.split(', ');
+
+    // Barra que irá sobre el navbar
+    const topBar = document.getElementById('topBar');
+    topBar.innerHTML = `
+      <div class="container-fluid">
+        <p class="small my-0 mx-auto">Clima actual en ${nombreLocalidad[0]}, ${nombreLocalidad[1]}: <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}.png" width="40" > ${data.weather[0].description} - Temperatura: ${data.main.temp}°C - Humedad ambiental: ${data.main.humidity}%</p>
+      </div>
+    `;
+  } catch (error) {
+    console.error(error);
+  }
 };
